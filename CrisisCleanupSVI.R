@@ -7,6 +7,8 @@ svi <- read.csv(file = "/Users/danny/Documents/Capstone/SVI2018_US.csv")
 # incident count by incident type
 icit <- read.csv(file = "/Users/danny/Documents/Capstone/IncidentCountByIncidentType.csv")
 
+barplot(icit)
+
 icit$incident_type <- factor(icit$incident_type, levels = c("hurricane", "flood", "tornado", "tropical_storm", "virus",
                                                             "wind", "flood_tstorm", "fire", "snow", "volcano",
                                                             "rebuild", "mudslide"))
