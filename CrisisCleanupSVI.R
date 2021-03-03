@@ -1,5 +1,13 @@
+# install packages
+install.packages("ggplot2")
+install.packages("leaflet")
+
 # packages
 library(ggplot2)
+library(leaflet)
+
+# notes
+# histogram with colored tails
 
 # svi data
 svi <- read.csv(file = "/Users/danny/Documents/Capstone/SVI2018_US.csv")
