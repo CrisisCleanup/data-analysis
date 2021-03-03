@@ -3,11 +3,13 @@ library(ggplot2)
 
 # svi data
 svi <- read.csv(file = "/Users/danny/Documents/Capstone/SVI2018_US.csv")
+View(svi)
 
 # incident count by incident type
 icit <- read.csv(file = "/Users/danny/Documents/Capstone/IncidentCountByIncidentType.csv")
+View(icit)
 
-barplot(icit)
+hist(icit$incident_count, xlab = "Incident Type", ylab = "Incident Count")
 
 icit$incident_type <- factor(icit$incident_type, levels = c("hurricane", "flood", "tornado", "tropical_storm", "virus",
                                                             "wind", "flood_tstorm", "fire", "snow", "volcano",
@@ -19,6 +21,7 @@ ggplot(data = icit, aes(x = incident_type, y = incident_count)) +
 
 # incident count by incident name
 icin <- read.csv(file = "/Users/danny/Documents/Capstone/IncidentCountByIncidentName.csv")
+View(icin)
 
 # flood
 flood <- subset(icin, incident_type == "flood")
