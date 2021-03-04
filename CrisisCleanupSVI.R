@@ -40,6 +40,9 @@ ggplot(data = flood, aes(x = incident_name, y = incident_count)) +
 # hurricane
 hurricane <- subset(icin, incident_type == "hurricane" & incident_name != "Hurricane Dorian (Bahamas)")
 View(hurricane)
+my_hist <- hist(hurricane$incident_count, breaks = 100, plot = F)
+my_color <- ifelse(my_hist$breaks < -10, rgb(0.2,0.8,0.5,0.5), ifelse(my_hist$breaks >= 10, "purple", rgb(0.2,0.2,0.2,0.2)))
+plot(my_hist, col = my_color, border = F, main = "", xlab = "value of the variable", xlim = c(0, 100))
 
 # tornado
 tornado <- subset(icin, incident_type == "tornado")
