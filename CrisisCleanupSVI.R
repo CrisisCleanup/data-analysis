@@ -33,10 +33,45 @@ View(wt)
 ggplot(wt, aes(x = Var1)) + 
   geom_bar()
 
-# incident type work type
-itwt <- data.frame(ccd$incident_type, ccd$work_type_key)
+# hurricane
+hurricane <- subset(ccd, incident_type == "hurricane")
+hurricane <- data.frame(hurricane$work_type_key)
+hurricane <- data.frame(table(unlist(hurricane)))
+hurricane <- hurricane[order(-hurricane$Freq), ]
+hurricane <- subset(hurricane, Freq >= 10000)
+View(hurricane)
 
-View(itwt)
+# flood
+flood <- subset(ccd, incident_type == "flood")
+flood <- data.frame(flood$work_type_key)
+flood <- data.frame(table(unlist(flood)))
+flood <- flood[order(-flood$Freq), ]
+flood <- subset(flood, Freq >= 2000)
+View(flood)
+
+# tropical storm
+ts <- subset(ccd, incident_type == "tropical_storm")
+ts <- data.frame(ts$work_type_key)
+ts <- data.frame(table(unlist(ts)))
+ts <- ts[order(-ts$Freq), ]
+ts <- subset(ts, Freq >= 70)
+View(ts)
+
+# tornado
+tornado <- subset(ccd, incident_type == "tornado")
+tornado <- data.frame(tornado$work_type_key)
+tornado <- data.frame(table(unlist(tornado)))
+tornado <- tornado[order(-tornado$Freq), ]
+tornado <- subset(tornado, Freq >= 400)
+View(tornado)
+
+# wind
+wind <- subset(ccd, incident_type == "wind")
+wind <- data.frame(wind$work_type_key)
+wind <- data.frame(table(unlist(wind)))
+wind <- wind[order(-wind$Freq), ]
+wind <- subset(wind, Freq >= 70)
+View(wind)
 
 # Hurricane Sandy
 sandy <- subset(ccd[, c("name", "created_at", "svi")], name == "Hurricane Sandy Recovery")
