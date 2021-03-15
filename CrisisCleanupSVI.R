@@ -40,6 +40,8 @@ hurricane <- data.frame(table(unlist(hurricane)))
 hurricane <- hurricane[order(-hurricane$Freq), ]
 hurricane <- subset(hurricane, Freq >= 10000)
 View(hurricane)
+ggplot(hurrican, aes(x = Var1)) + 
+  geom_bar()
 
 # flood
 flood <- subset(ccd, incident_type == "flood")
@@ -48,6 +50,8 @@ flood <- data.frame(table(unlist(flood)))
 flood <- flood[order(-flood$Freq), ]
 flood <- subset(flood, Freq >= 2000)
 View(flood)
+ggplot(flood, aes(x = Var1)) + 
+  geom_bar()
 
 # tropical storm
 ts <- subset(ccd, incident_type == "tropical_storm")
@@ -56,6 +60,8 @@ ts <- data.frame(table(unlist(ts)))
 ts <- ts[order(-ts$Freq), ]
 ts <- subset(ts, Freq >= 70)
 View(ts)
+ggplot(ts, aes(x = Var1)) + 
+  geom_bar()
 
 # tornado
 tornado <- subset(ccd, incident_type == "tornado")
@@ -64,6 +70,8 @@ tornado <- data.frame(table(unlist(tornado)))
 tornado <- tornado[order(-tornado$Freq), ]
 tornado <- subset(tornado, Freq >= 400)
 View(tornado)
+ggplot(tornado, aes(x = Var1)) + 
+  geom_bar()
 
 # wind
 wind <- subset(ccd, incident_type == "wind")
@@ -72,12 +80,13 @@ wind <- data.frame(table(unlist(wind)))
 wind <- wind[order(-wind$Freq), ]
 wind <- subset(wind, Freq >= 70)
 View(wind)
+ggplot(wind, aes(x = Var1)) + 
+  geom_bar()
 
 # Hurricane Sandy
 sandy <- subset(ccd[, c("name", "created_at", "svi")], name == "Hurricane Sandy Recovery")
 sandy <- sandy[order(sandy$created_at), ]
 View(sandy)
-
 ggplot(sandy, aes(x = created_at, y = svi)) +
   geom_point()
 
@@ -85,6 +94,5 @@ ggplot(sandy, aes(x = created_at, y = svi)) +
 michael <- subset(ccd[, c("name", "created_at", "svi")], name == "Hurricane Michael")
 michael <- michael[order(michael$created_at), ]
 View(michael)
-
 ggplot(michael, aes(x = created_at, y = svi)) + 
   geom_point()
