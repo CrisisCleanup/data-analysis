@@ -16,22 +16,27 @@ View(ccd)
 unique(ccd$name)
 
 # incident type
-it <- data.frame(ccd$incident_type)
+it <- data.frame(ccd$incident_type, ccd$name)
+it <- unique(it)
+it <- data.frame(it$ccd.incident_type)
 it <- data.frame(table(unlist(it)))
-it <- it[order(-it$Freq), ]
-it <- subset(it, Freq >= 4000)
+it <- subset(it, it$Freq > 1)
 View(it)
-ggplot(it, aes(x = Var1)) +
-  geom_bar()
+ggplot(it, aes(x = reorder(it$Var1, -it$Freq), y = it$Freq)) +
+  geom_bar(stat = "identity")
 
 # work type
 wt <- data.frame(ccd$work_type_key)
 wt <- data.frame(table(unlist(wt)))
+wt <- subset(wt, wt$Freq >= 20000)
 wt <- wt[order(-wt$Freq), ]
-wt <- subset(wt, Freq >= 20000)
 View(wt)
-ggplot(wt, aes(x = Var1)) + 
-  geom_bar()
+ggplot(wt, aes(x = reorder(Var1, -Freq), y = Freq)) + 
+  geom_bar(stat = "identity")
+
+# work type by incident type
+wtit <- data.frame(ccd$incident_type, ccd$work_type_key)
+View(wtit)
 
 # hurricane
 hurricane <- subset(ccd, incident_type == "hurricane")
@@ -40,8 +45,8 @@ hurricane <- data.frame(table(unlist(hurricane)))
 hurricane <- hurricane[order(-hurricane$Freq), ]
 hurricane <- subset(hurricane, Freq >= 10000)
 View(hurricane)
-ggplot(hurrican, aes(x = Var1)) + 
-  geom_bar()
+ggplot(hurricane, aes(x = reorder(Var1, -Freq), y = Freq)) + 
+  geom_bar(stat = "identity")
 
 # flood
 flood <- subset(ccd, incident_type == "flood")
