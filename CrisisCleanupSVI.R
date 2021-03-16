@@ -37,7 +37,9 @@ View(wt)
 ggplot(wt, aes(x = reorder(Var1, -Freq), y = Freq)) + 
   geom_bar(stat = "identity")
 
-# incident type by work type
+test1 <- subset(ccd, incident_type == "wind" & work_type_key == "mold_remediation")
+
+# pivot table
 itwt <- data.frame(ccd$incident_type, ccd$work_type_key)
 itwt <- subset(itwt, (ccd.incident_type == "flood" | ccd.incident_type == "hurricane"| ccd.incident_type == "tornado" | 
                         ccd.incident_type == "wind") & 
@@ -50,6 +52,20 @@ pt$addColumnDataGroups("ccd.incident_type")
 pt$addRowDataGroups("ccd.work_type_key")
 pt$defineCalculation(calculationName = "TotalIncidents", summariseExpression = "n()")
 pt$renderPivot()
+
+# test pivot table
+floodpt <- subset(ccd, incident_type == "flood" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
+                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
+                                                     work_type_key == "trees"))
+hurricanept <- subset(ccd, incident_type == "hurricane" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
+                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
+                                                     work_type_key == "trees"))
+tornadopt <- subset(ccd, incident_type == "tornado" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
+                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
+                                                     work_type_key == "trees"))
+windpt <- subset(ccd, incident_type == "wind" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
+                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
+                                                     work_type_key == "trees"))
 
 # hurricane
 hurricane <- subset(ccd, incident_type == "hurricane")
