@@ -1,14 +1,17 @@
 # install packages
 install.packages("dplyr")
 install.packages("ggplot2")
+install.packages("pivottabler")
 
 # load packages
 library(dplyr)
 library(ggplot2)
+library(pivottabler)
 
 # 2018 SVI data
 svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
 View(svi)
+
 
 # Crisis Cleanup data
 ccd <- read.csv(file = "/users/danny/documents/capstone/ccd.csv")
@@ -34,9 +37,19 @@ View(wt)
 ggplot(wt, aes(x = reorder(Var1, -Freq), y = Freq)) + 
   geom_bar(stat = "identity")
 
-# work type by incident type
-wtit <- data.frame(ccd$incident_type, ccd$work_type_key)
-View(wtit)
+# incident type by work type
+itwt <- data.frame(ccd$incident_type, ccd$work_type_key)
+itwt <- subset(itwt, (ccd.incident_type == "flood" | ccd.incident_type == "hurricane"| ccd.incident_type == "tornado" | 
+                        ccd.incident_type == "wind") & 
+                 (ccd.work_type_key == "tarp" | ccd.work_type_key == "muck_out" | ccd.work_type_key == "trees" | 
+                    ccd.work_type_key == "debris" | ccd.work_type_key == "mold_remediation"))
+View(itwt)
+pt <- PivotTable$new()
+pt$addData(itwt)
+pt$addColumnDataGroups("ccd.incident_type")
+pt$addRowDataGroups("ccd.work_type_key")
+pt$defineCalculation(calculationName = "TotalIncidents", summariseExpression = "n()")
+pt$renderPivot()
 
 # hurricane
 hurricane <- subset(ccd, incident_type == "hurricane")
