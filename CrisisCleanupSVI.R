@@ -11,9 +11,8 @@ library(dplyr)
 library(ggplot2)
 library(pivottabler)
 
+# US map
 us_states <- map_data("state")
-view(us_counties)
-
 c <- ggplot(data = us_states, mapping = aes(x = long, y = lat, group = group, fill = region))
 c + geom_polygon() + guides(fill = FALSE)
 
