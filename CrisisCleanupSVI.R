@@ -11,17 +11,6 @@ library(dplyr)
 library(ggplot2)
 library(pivottabler)
 
-# US map
-us_states <- map_data("state")
-c <- ggplot(data = us_states, mapping = aes(x = long, y = lat, group = group, fill = region))
-c + geom_polygon() + guides(fill = FALSE)
-
-# 2018 SVI data
-svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
-View(svi)
-svilocation <- data.frame(svi$STATE, svi$COUNTY)
-View(svilocation)
-
 # Crisis Cleanup data
 ccd <- read.csv(file = "/users/danny/documents/capstone/ccd.csv")
 View(ccd)
@@ -57,7 +46,7 @@ pt$addRowDataGroups("ccd.work_type_key")
 pt$defineCalculation(calculationName = "TotalIncidents", summariseExpression = "n()")
 pt$renderPivot()
 
-# test pivot table
+# validate pivot tables
 floodpt <- subset(ccd, incident_type == "flood" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
                                                      work_type_key == "muck_out" | work_type_key == "tarp" | 
                                                      work_type_key == "trees"))
@@ -70,6 +59,16 @@ tornadopt <- subset(ccd, incident_type == "tornado" & (work_type_key == "debris"
 windpt <- subset(ccd, incident_type == "wind" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
                                                      work_type_key == "muck_out" | work_type_key == "tarp" | 
                                                      work_type_key == "trees"))
+
+# 2018 SVI data
+svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
+sviutah <- subset(svi, STATE == "UTAH" & RPL_THEMES != "-999")
+sviutah <- data.frame(sviutah$STATE, sviutah$RPL_THEMES)
+ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) + 
+  geom_boxplot() + 
+  geom_jitter(color = "black", size = 0.4, alpha = 0.9) + 
+  theme(legend.position = "none", plot.title = element_text(size = 11)) + 
+  xlab("")
 
 # flood
 flood <- subset(ccd, incident_type == "flood")
