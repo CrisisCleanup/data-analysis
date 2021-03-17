@@ -71,55 +71,24 @@ ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) +
   xlab("")
 
 # flood
-flood <- subset(ccd, incident_type == "flood")
-flood <- data.frame(flood$work_type_key)
-flood <- data.frame(table(unlist(flood)))
-flood <- flood[order(-flood$Freq), ]
-flood <- subset(flood, Freq >= 2000)
+flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020")
 View(flood)
-ggplot(flood, aes(x = Var1)) + 
-  geom_bar()
-
-# hurricane
-hurricane <- subset(ccd, incident_type == "hurricane")
-hurricane <- data.frame(hurricane$work_type_key)
-hurricane <- data.frame(table(unlist(hurricane)))
-hurricane <- hurricane[order(-hurricane$Freq), ]
-hurricane <- subset(hurricane, Freq >= 10000)
-View(hurricane)
-ggplot(hurricane, aes(x = reorder(Var1, -Freq), y = Freq)) + 
-  geom_bar(stat = "identity")
-
-# tornado
-tornado <- subset(ccd, incident_type == "tornado")
-tornado <- data.frame(tornado$work_type_key)
-tornado <- data.frame(table(unlist(tornado)))
-tornado <- tornado[order(-tornado$Freq), ]
-tornado <- subset(tornado, Freq >= 400)
-View(tornado)
-ggplot(tornado, aes(x = Var1)) + 
-  geom_bar()
-
-# wind
-wind <- subset(ccd, incident_type == "wind")
-wind <- data.frame(wind$work_type_key)
-wind <- data.frame(table(unlist(wind)))
-wind <- wind[order(-wind$Freq), ]
-wind <- subset(wind, Freq >= 70)
-View(wind)
-ggplot(wind, aes(x = Var1)) + 
-  geom_bar()
-
-# Hurricane Sandy
-sandy <- subset(ccd[, c("name", "created_at", "svi")], name == "Hurricane Sandy Recovery")
-sandy <- sandy[order(sandy$created_at), ]
-View(sandy)
-ggplot(sandy, aes(x = created_at, y = svi)) +
+ggplot(flood, aes(x = created_at, y = svi)) + 
   geom_point()
 
-# Hurricane Michael
-michael <- subset(ccd[, c("name", "created_at", "svi")], name == "Hurricane Michael")
-michael <- michael[order(michael$created_at), ]
-View(michael)
-ggplot(michael, aes(x = created_at, y = svi)) + 
+# hurricane
+hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")
+View(hurricane)
+ggplot(hurricane, aes(x = created_at, y = svi)) + 
+  geom_point()
+
+# tornado
+tornado <- subset(ccd, incident_type == "tornado" & name == "Easter/April 2020 Tornadoes")
+View(tornado)
+ggplot(tornado, aes(x = created_at, y = svi)) + 
+  geom_point()
+
+# wind
+wind <- subset(ccd, incident_type == "wind" & name == "Midwest Derecho, Aug 2020")
+ggplot(wind, aes(x = created_at, y = svi)) + 
   geom_point()
