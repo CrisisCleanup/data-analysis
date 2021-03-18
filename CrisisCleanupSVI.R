@@ -52,7 +52,7 @@ svius <- subset(svi, RPL_THEMES != "-999")
 svius <- data.frame(svius$ST_ABBR, svius$RPL_THEMES)
 ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES, fill = svius.ST_ABBR)) + 
   geom_boxplot() + 
-  theme(legend.position = "none")
+  theme(legend.position = "none") + 
   labs(x = "state", y = "svi")
 
 # SVI Utah
@@ -67,7 +67,6 @@ ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) +
 
 # flood
 flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020")
-View(flood)
 ggplot(flood, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
@@ -76,7 +75,6 @@ ggplot(flood, aes(x = created_at, y = svi)) +
 
 # hurricane
 hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")
-View(hurricane)
 ggplot(hurricane, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
@@ -85,7 +83,6 @@ ggplot(hurricane, aes(x = created_at, y = svi)) +
   
 # tornado
 tornado <- subset(ccd, incident_type == "tornado" & name == "Easter/April 2020 Tornadoes")
-View(tornado)
 ggplot(tornado, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
