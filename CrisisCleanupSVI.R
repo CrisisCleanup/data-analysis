@@ -60,7 +60,7 @@ sviutah <- subset(svi, STATE == "UTAH" & RPL_THEMES != "-999")
 sviutah <- data.frame(sviutah$STATE, sviutah$RPL_THEMES)
 ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) + 
   geom_boxplot() + 
-  geom_jitter(color = "black", size = 0.4, alpha = 0.9) + 
+  geom_jitter() + 
   theme(legend.position = "none") + 
   xlab("") + 
   labs(y = "svi")
