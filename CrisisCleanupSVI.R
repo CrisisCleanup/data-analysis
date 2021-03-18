@@ -64,7 +64,7 @@ windpt <- subset(ccd, incident_type == "wind" & (work_type_key == "debris" | wor
 svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
 View(svi)
 
-# SVI US minus Utah
+# SVI US
 svius <- subset(svi, RPL_THEMES != "-999")
 svius <- data.frame(svius$ST_ABBR, svius$RPL_THEMES)
 ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES)) + 
