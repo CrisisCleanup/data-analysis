@@ -62,6 +62,15 @@ windpt <- subset(ccd, incident_type == "wind" & (work_type_key == "debris" | wor
 
 # 2018 SVI data
 svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
+View(svi)
+
+# SVI US minus Utah
+svius <- subset(svi, RPL_THEMES != "-999")
+svius <- data.frame(svius$ST_ABBR, svius$RPL_THEMES)
+ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES)) + 
+  geom_boxplot()
+
+# SVI Utah
 sviutah <- subset(svi, STATE == "UTAH" & RPL_THEMES != "-999")
 sviutah <- data.frame(sviutah$STATE, sviutah$RPL_THEMES)
 ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) + 
