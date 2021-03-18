@@ -11,9 +11,6 @@ library(lubridate)
 # Crisis Cleanup data
 ccd <- read.csv(file = "/users/danny/documents/capstone/ccd.csv")
 ccd$created_at <- as.Date(ccd$created_at)
-str(ccd)
-View(ccd)
-unique(ccd$name)
 
 # incident type
 it <- data.frame(ccd$incident_type, ccd$name)
@@ -47,23 +44,8 @@ pt$addRowDataGroups("ccd.work_type_key")
 pt$defineCalculation(calculationName = "TotalIncidents", summariseExpression = "n()")
 pt$renderPivot()
 
-# validate pivot tables
-floodpt <- subset(ccd, incident_type == "flood" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
-                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
-                                                     work_type_key == "trees"))
-hurricanept <- subset(ccd, incident_type == "hurricane" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
-                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
-                                                     work_type_key == "trees"))
-tornadopt <- subset(ccd, incident_type == "tornado" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
-                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
-                                                     work_type_key == "trees"))
-windpt <- subset(ccd, incident_type == "wind" & (work_type_key == "debris" | work_type_key == "mold_remediation" | 
-                                                     work_type_key == "muck_out" | work_type_key == "tarp" | 
-                                                     work_type_key == "trees"))
-
 # 2018 SVI data
 svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
-View(svi)
 
 # SVI US
 svius <- subset(svi, RPL_THEMES != "-999")
