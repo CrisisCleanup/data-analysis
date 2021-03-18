@@ -1,18 +1,17 @@
 # install packages
-install.packages("tidyverse")
-install.packages("dplyr")
 install.packages("ggplot2")
 install.packages("pivottabler")
-install.packages("tidyverse")
+install.packages("lubridate")
 
 # load packages
-library(tidyverse)
-library(dplyr)
 library(ggplot2)
 library(pivottabler)
+library(lubridate)
 
 # Crisis Cleanup data
 ccd <- read.csv(file = "/users/danny/documents/capstone/ccd.csv")
+ccd$created_at <- as.Date(ccd$created_at)
+str(ccd)
 View(ccd)
 unique(ccd$name)
 
@@ -22,7 +21,7 @@ it <- unique(it)
 it <- data.frame(it$ccd.incident_type)
 it <- data.frame(table(unlist(it)))
 it <- subset(it, it$Freq > 1)
-ggplot(it, aes(x = reorder(it$Var1, -it$Freq), y = it$Freq)) +
+ggplot(it, aes(x = reorder(Var1, -Freq), y = Freq)) +
   geom_bar(stat = "identity") + 
   labs(x = "incident type", y = "incident count")
 
