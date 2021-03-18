@@ -23,7 +23,8 @@ it <- data.frame(it$ccd.incident_type)
 it <- data.frame(table(unlist(it)))
 it <- subset(it, it$Freq > 1)
 ggplot(it, aes(x = reorder(it$Var1, -it$Freq), y = it$Freq)) +
-  geom_bar(stat = "identity")
+  geom_bar(stat = "identity") + 
+  labs(x = "incident type", y = "incident count")
 
 # work type
 wt <- data.frame(ccd$work_type_key)
@@ -31,7 +32,8 @@ wt <- data.frame(table(unlist(wt)))
 wt <- subset(wt, wt$Freq >= 20000)
 wt <- wt[order(-wt$Freq), ]
 ggplot(wt, aes(x = reorder(Var1, -Freq), y = Freq)) + 
-  geom_bar(stat = "identity")
+  geom_bar(stat = "identity") + 
+  labs(x = "work type", y = "work type count")
 
 # pivot table
 itwt <- data.frame(ccd$incident_type, ccd$work_type_key)
@@ -68,7 +70,8 @@ View(svi)
 svius <- subset(svi, RPL_THEMES != "-999")
 svius <- data.frame(svius$ST_ABBR, svius$RPL_THEMES)
 ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES)) + 
-  geom_boxplot()
+  geom_boxplot() + 
+  labs(x = "state", y = "svi")
 
 # SVI Utah
 sviutah <- subset(svi, STATE == "UTAH" & RPL_THEMES != "-999")
@@ -77,27 +80,40 @@ ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) +
   geom_boxplot() + 
   geom_jitter(color = "black", size = 0.4, alpha = 0.9) + 
   theme(legend.position = "none", plot.title = element_text(size = 11)) + 
-  xlab("")
+  xlab("") + 
+  labs(y = "svi")
 
 # flood
 flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020")
 View(flood)
 ggplot(flood, aes(x = created_at, y = svi)) + 
-  geom_point()
+  geom_point() + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  ggtitle("Michigan Floods, May 2020") + 
+  labs(x = "time", y = "svi")
 
 # hurricane
 hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")
 View(hurricane)
 ggplot(hurricane, aes(x = created_at, y = svi)) + 
-  geom_point()
-
+  geom_point() + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  ggtitle("Hurricane Zeta") + 
+  labs(x = "time", y = "svi")
+  
 # tornado
 tornado <- subset(ccd, incident_type == "tornado" & name == "Easter/April 2020 Tornadoes")
 View(tornado)
 ggplot(tornado, aes(x = created_at, y = svi)) + 
-  geom_point()
+  geom_point() + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  ggtitle("Easter/April 2020 Tornadoes") + 
+  labs(x = "time", y = "svi")
 
 # wind
 wind <- subset(ccd, incident_type == "wind" & name == "Midwest Derecho, Aug 2020")
 ggplot(wind, aes(x = created_at, y = svi)) + 
-  geom_point()
+  geom_point() + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  ggtitle("Midwest Derecho, Aug 2020") + 
+  labs(x = "time", y = "svi")
