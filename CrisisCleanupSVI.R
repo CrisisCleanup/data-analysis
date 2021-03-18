@@ -68,8 +68,9 @@ View(svi)
 # SVI US
 svius <- subset(svi, RPL_THEMES != "-999")
 svius <- data.frame(svius$ST_ABBR, svius$RPL_THEMES)
-ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES)) + 
+ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES, fill = svius.ST_ABBR)) + 
   geom_boxplot() + 
+  theme(legend.position = "none")
   labs(x = "state", y = "svi")
 
 # SVI Utah
@@ -78,7 +79,7 @@ sviutah <- data.frame(sviutah$STATE, sviutah$RPL_THEMES)
 ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) + 
   geom_boxplot() + 
   geom_jitter(color = "black", size = 0.4, alpha = 0.9) + 
-  theme(legend.position = "none", plot.title = element_text(size = 11)) + 
+  theme(legend.position = "none") + 
   xlab("") + 
   labs(y = "svi")
 
@@ -88,7 +89,7 @@ View(flood)
 ggplot(flood, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  ggtitle("Michigan Floods, May 2020") + 
+  ggtitle("Michigan Floods 2020") + 
   labs(x = "time", y = "svi")
 
 # hurricane
@@ -97,7 +98,7 @@ View(hurricane)
 ggplot(hurricane, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  ggtitle("Hurricane Zeta") + 
+  ggtitle("Hurricane Zeta 2020") + 
   labs(x = "time", y = "svi")
   
 # tornado
@@ -106,7 +107,7 @@ View(tornado)
 ggplot(tornado, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  ggtitle("Easter/April 2020 Tornadoes") + 
+  ggtitle("Easter Tornadoes 2020") + 
   labs(x = "time", y = "svi")
 
 # wind
@@ -114,5 +115,5 @@ wind <- subset(ccd, incident_type == "wind" & name == "Midwest Derecho, Aug 2020
 ggplot(wind, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  ggtitle("Midwest Derecho, Aug 2020") + 
+  ggtitle("Midwest Derecho 2020") + 
   labs(x = "time", y = "svi")
