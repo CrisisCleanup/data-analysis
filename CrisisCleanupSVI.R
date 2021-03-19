@@ -65,6 +65,15 @@ ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) +
   xlab("") + 
   labs(y = "svi")
 
+# SVI Utah Count
+sviutcounty <- subset(svi, STATE == "UTAH" & RPL_THEMES != "-999")
+sviutcounty <- data.frame(svicounty$COUNTY, svicounty$RPL_THEMES)
+ggplot(svicounty, aes(x = svicounty.COUNTY, y = svicounty.RPL_THEMES, fill = svicounty.COUNTY)) + 
+  geom_boxplot() + 
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) +
+  xlab("") +
+  labs(y = "svi")
+
 # flood
 flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020")
 ggplot(flood, aes(x = created_at, y = svi)) + 
