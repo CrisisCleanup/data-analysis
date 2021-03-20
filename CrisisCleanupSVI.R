@@ -9,7 +9,7 @@ library(pivottabler)
 library(lubridate)
 
 # Crisis Cleanup data
-ccd <- read.csv(file = "/users/danny/documents/capstone/ccd.csv")
+ccd <- read.csv(file = "/users/danny/documents/capstone/ccd_v2.csv")
 ccd$created_at <- as.Date(ccd$created_at)
 
 # incident type
@@ -76,11 +76,22 @@ ggplot(svicounty, aes(x = svicounty.COUNTY, y = svicounty.RPL_THEMES, fill = svi
 
 # flood
 flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020")
+
+ctabbr <- function() {
+  if flood$state == "Michigan"
+}
+
+flood["ctabbr"] <- ()
+
 ggplot(flood, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   ggtitle("Michigan Floods 2020") + 
   labs(x = "time", y = "svi")
+
+colnames(flood)
+unique(flood$state)
+unique(flood$county)
 
 # hurricane
 hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")

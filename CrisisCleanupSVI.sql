@@ -1,4 +1,4 @@
-SELECT ww.id, wwwtsp.work_type_key,  ww.svi, ww.location, ww.created_at, ww.incident_id, ii.name, ii.incident_type
+SELECT ww.id, wwwtsp.work_type_key,  ww.svi, ww.location, ww.state, ww.county, ww.created_at, ww.incident_id, ii.name, ii.incident_type
 FROM worksite_worksites AS ww
 LEFT JOIN worksite_worksites_work_types_statuses_phases AS wwwtsp
 ON ww.id = wwwtsp.worksite_id
