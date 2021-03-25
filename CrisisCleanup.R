@@ -84,7 +84,7 @@ sviflood <- subset(svi, STATE == "MICHIGAN" & RPL_THEMES != "-999" &
                       COUNTY == "Washtenaw" | COUNTY == "Macomb" | COUNTY == "Clinton" | 
                       COUNTY == "Kent" | COUNTY == "St. Clair" | COUNTY == "Livingston"))
 sviflood <- data.frame(sviflood$COUNTY, sviflood$ST_ABBR, sviflood$RPL_THEMES)
-sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep = " County, ")
+sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep = ", ")
 ggplot(sviflood, aes(x = ctyst, y = sviflood.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
   theme(legend.position = "none", axis.text = element_text(angle = 90)) + 
@@ -112,10 +112,16 @@ svihurricane <- subset(svi, RPL_THEMES != "-999" & (STATE == "LOUISIANA" | STATE
                             COUNTY == "Escambia" | COUNTY == "Union" | COUNTY == "Dekalb" | COUNTY == "Bartow" | 
                             COUNTY == "St. Charles" | COUNTY == "Gwinnett" | COUNTY == "Marengo" | COUNTY == "Marshall" | 
                             COUNTY == "Cobb" | COUNTY == "Paulding" | COUNTY == "Tallapoosa" | COUNTY == "Talladega" | 
-                            COUNTY == "White" | COUNTY == "Terrebonne" | COUNTY == "Shelby" | "Greene" | COUNTY == "Bibb" | 
-                            COUNTY == "Chilton" | COUNTY == "Perry" | COUNTY == "Montgomery"))
-
-unique(svi$COUNTY)
+                            COUNTY == "White" | COUNTY == "Terrebonne" | COUNTY == "Shelby" | COUNTY == "Greene" | 
+                            COUNTY == "Bibb" | COUNTY == "Chilton" | COUNTY == "Perry" | COUNTY == "Montgomery"))
+svihurricane <- data.frame(svihurricane$COUNTY, svihurricane$ST_ABBR, svihurricane$RPL_THEMES)
+svihurricane$ctyst <- paste(svihurricane$svihurricane.COUNTY, svihurricane$svihurricane.ST_ABBR, sep = ", ")
+ggplot(svihurricane, aes(x = ctyst, y = svihurricane.RPL_THEMES, fill = ctyst)) + 
+  geom_boxplot() + 
+  theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
+  ggtitle("Hurricane Zeta 2020") + 
+  xlab("") + 
+  labs(y = "svi")
 
 # hurricane
 hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")
@@ -124,10 +130,36 @@ ggplot(hurricane, aes(x = created_at, y = svi)) +
   theme(plot.title = element_text(hjust = 0.5)) + 
   ggtitle("Hurricane Zeta 2020") + 
   labs(x = "time", y = "svi")
-  
-colnames(hurricane)
-unique(hurricane$state)
-unique(hurricane$county)
+
+# SVI tornado
+svitornado <- subset(svi, RPL_THEMES != "-999" & (STATE == "SOUTH CAROLINA" | STATE == "ALABAMA" | STATE == "MISSISSIPPI" | 
+                                                    STATE == "LOUISIANA" | STATE == "TENNESSEE" | STATE == "GEORGIA" | 
+                                                    STATE == "NORTH CAROLINA" | STATE == "FLORIDA" | STATE == "OKLAHOMA" | 
+                                                    STATE == "TEXAS" | STATE == "CONNECTICUT" | STATE == "OHIO" | 
+                                                    STATE == "PENNSYLVANIA" | STATE == "ARKANSAS" | STATE == "MASSACHUSETTS" | 
+                                                    STATE == "MAINE" | STATE == "VIRGINIA" | STATE == "KENTUCKY") & 
+                       (COUNTY == "Colleton" | COUNTY == "York" | COUNTY == "Etowah" | COUNTY == "Covington" | COUNTY == "Jefferson Davis" | 
+                          COUNTY == "Jones" | COUNTY == "Ouachita" | COUNTY == "Hampton" | COUNTY == "Oconee" | COUNTY == "Hamilton" | 
+                          COUNTY == "Jasper" | COUNTY == "Clarke" | COUNTY == "Catoosa" | COUNTY == "Greenville" | COUNTY == "Walker" | 
+                          COUNTY == "Walthall" | COUNTY == "Pickens" | COUNTY == "Hoke" | COUNTY == "Bradley" | COUNTY == "Screven" | 
+                          COUNTY == "Murray" | COUNTY == "Forrest" | COUNTY == "Clay" | COUNTY == "Stewart" | COUNTY == "Santa Rosa" | 
+                          COUNTY == "Lamar" | COUNTY == "Marion" | COUNTY == "Calhoun" | COUNTY == "Lauderdale" | COUNTY == "Lee" | 
+                          COUNTY == "Dooly" | COUNTY == "Tallapoosa" | COUNTY == "Marion" | COUNTY == "Rankin" | COUNTY == "Rogers" | 
+                          COUNTY == "Polk" | COUNTY == "Richland" | COUNTY == "Harrison" | COUNTY == "Fairfield" | COUNTY == "Montgomery" | 
+                          COUNTY == "Oklahoma" | COUNTY == "Pender" | COUNTY == "Brunswick" | COUNTY == "Washington" | COUNTY == "Lawrence" | 
+                          COUNTY == "Knox" | COUNTY == "Whitfield" | COUNTY == "Banks" | COUNTY == "Coahoma" | COUNTY == "Henry" | 
+                          COUNTY == "Jefferson" | COUNTY == "Bladen" | COUNTY == "Upson" | COUNTY == "Tangipahoa" | COUNTY == "Cherokee" | 
+                          COUNTY == "Kaufman" | COUNTY == "Sevier" | COUNTY == "Davidson" | COUNTY == "Wilson" | COUNTY == "Maury" | 
+                          COUNTY == "Essex" | COUNTY == "Coffee" | COUNTY == "Robertson" | COUNTY == "Rutherford" | COUNTY == "Henderson" | 
+                          COUNTY == "Crittenden" | COUNTY == "Ohio" | COUNTY == "Calcasieu" | COUNTY == "Orange" | COUNTY == "Vernon"))
+svitornado <- data.frame(svitornado$COUNTY, svitornado$ST_ABBR, svitornado$RPL_THEMES)
+svitornado$ctyst <- paste(svitornado$svitornado.COUNTY, svitornado$svitornado.ST_ABBR, sep = ", ")
+ggplot(svitornado, aes(x = ctyst, y = svitornado.RPL_THEMES, fill = ctyst)) + 
+  geom_boxplot() + 
+  theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
+  ggtitle("Easter/April 2020 Tornadoes") + 
+  xlab("") + 
+  labs(y = "svi")
 
 # tornado
 tornado <- subset(ccd, incident_type == "tornado" & name == "Easter/April 2020 Tornadoes")
