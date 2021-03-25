@@ -8,11 +8,11 @@ library(ggplot2)
 library(pivottabler)
 library(lubridate)
 
-# Crisis Cleanup data
+# CC data
 ccd <- read.csv(file = "/users/danny/documents/capstone/ccd_v2.csv")
 ccd$created_at <- as.Date(ccd$created_at)
 
-# incident type
+# CC incident type
 it <- data.frame(ccd$incident_type, ccd$name)
 it <- unique(it)
 it <- data.frame(it$ccd.incident_type)
@@ -22,7 +22,7 @@ ggplot(it, aes(x = reorder(Var1, -Freq), y = Freq)) +
   geom_bar(stat = "identity") + 
   labs(x = "incident type", y = "incident count")
 
-# work type
+# CC work type
 wt <- data.frame(ccd$work_type_key)
 wt <- data.frame(table(unlist(wt)))
 wt <- subset(wt, wt$Freq >= 20000)
@@ -31,7 +31,7 @@ ggplot(wt, aes(x = reorder(Var1, -Freq), y = Freq)) +
   geom_bar(stat = "identity") + 
   labs(x = "work type", y = "work type count")
 
-# pivot table
+# CC pivot table
 itwt <- data.frame(ccd$incident_type, ccd$work_type_key)
 itwt <- subset(itwt, (ccd.incident_type == "flood" | ccd.incident_type == "hurricane"| ccd.incident_type == "tornado" | 
                         ccd.incident_type == "wind") & 
@@ -44,7 +44,7 @@ pt$addRowDataGroups("ccd.work_type_key")
 pt$defineCalculation(calculationName = "TotalIncidents", summariseExpression = "n()")
 pt$renderPivot()
 
-# 2018 SVI data
+# SVI data
 svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
 
 # SVI US
@@ -55,26 +55,7 @@ ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES, fill = svius.ST_ABBR)
   theme(legend.position = "none") + 
   labs(x = "state", y = "svi")
 
-# SVI Utah
-sviutah <- subset(svi, STATE == "UTAH" & RPL_THEMES != "-999")
-sviutah <- data.frame(sviutah$STATE, sviutah$RPL_THEMES)
-ggplot(sviutah, aes(x = sviutah.STATE, y = sviutah.RPL_THEMES)) + 
-  geom_boxplot() + 
-  geom_jitter() + 
-  theme(legend.position = "none") + 
-  xlab("") + 
-  labs(y = "svi")
-
-# SVI Utah Count
-sviutcounty <- subset(svi, STATE == "UTAH" & RPL_THEMES != "-999")
-sviutcounty <- data.frame(svicounty$COUNTY, svicounty$RPL_THEMES)
-ggplot(svicounty, aes(x = svicounty.COUNTY, y = svicounty.RPL_THEMES, fill = svicounty.COUNTY)) + 
-  geom_boxplot() + 
-  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) +
-  xlab("") +
-  labs(y = "svi")
-
-# SVI flood
+# SVI Michigan Floods, May 2020
 sviflood <- subset(svi, STATE == "MICHIGAN" & RPL_THEMES != "-999" & 
                      (COUNTY == "Midland" | COUNTY == "Gladwin" | COUNTY == "Clare" | 
                       COUNTY == "Saginaw" | COUNTY == "Arenac" | COUNTY == "Gratiot" | 
@@ -91,7 +72,7 @@ ggplot(sviflood, aes(x = ctyst, y = sviflood.RPL_THEMES, fill = ctyst)) +
   xlab("") + 
   labs(y = "svi")
 
-# flood
+# CC Michigan Floods, May 2020
 flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020" & state == "Michigan")
 ggplot(flood, aes(x = created_at, y = svi)) + 
   geom_point() + 
@@ -99,7 +80,7 @@ ggplot(flood, aes(x = created_at, y = svi)) +
   ggtitle("Michigan Floods 2020") + 
   labs(x = "time", y = "svi")
 
-# SVI hurricane
+# SVI Hurricane Zeta
 svihurricane <- subset(svi, RPL_THEMES != "-999" & (STATE == "LOUISIANA" | STATE == "ALABAMA" | STATE == "MISSISSIPPI" | 
                                                       STATE == "NORTH CAROLINA" | STATE == "GEORGIA" | STATE == "FLORIDA") & 
                          (COUNTY == "St. Tammy" | COUNTY == "Jefferson" | COUNTY == "Orleans" | COUNTY == "Mobile" | 
@@ -123,7 +104,7 @@ ggplot(svihurricane, aes(x = ctyst, y = svihurricane.RPL_THEMES, fill = ctyst)) 
   xlab("") + 
   labs(y = "svi")
 
-# hurricane
+# CC Hurricane Zeta
 hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")
 ggplot(hurricane, aes(x = created_at, y = svi)) + 
   geom_point() + 
@@ -131,7 +112,7 @@ ggplot(hurricane, aes(x = created_at, y = svi)) +
   ggtitle("Hurricane Zeta 2020") + 
   labs(x = "time", y = "svi")
 
-# SVI tornado
+# SVI Easter/April 2020 Tornadoes
 svitornado <- subset(svi, RPL_THEMES != "-999" & (STATE == "SOUTH CAROLINA" | STATE == "ALABAMA" | STATE == "MISSISSIPPI" | 
                                                     STATE == "LOUISIANA" | STATE == "TENNESSEE" | STATE == "GEORGIA" | 
                                                     STATE == "NORTH CAROLINA" | STATE == "FLORIDA" | STATE == "OKLAHOMA" | 
@@ -161,7 +142,7 @@ ggplot(svitornado, aes(x = ctyst, y = svitornado.RPL_THEMES, fill = ctyst)) +
   xlab("") + 
   labs(y = "svi")
 
-# tornado
+# CC Easter/April 2020 Tornadoes
 tornado <- subset(ccd, incident_type == "tornado" & name == "Easter/April 2020 Tornadoes")
 ggplot(tornado, aes(x = created_at, y = svi)) + 
   geom_point() + 
@@ -169,7 +150,25 @@ ggplot(tornado, aes(x = created_at, y = svi)) +
   ggtitle("Easter Tornadoes 2020") + 
   labs(x = "time", y = "svi")
 
-# wind
+# SVI Midwest Derecho, Aug 2020
+sviwind <- subset(svi, RPL_THEMES != "-999" & (STATE == "INDIANA" | STATE == "MISSOURI" | STATE == "IOWA" | STATE == "ILLINOIS" | 
+                                                 STATE == "KANSAS" | STATE == "MICHIGAN" | STATE == "MINNESOTA") & 
+                    (COUNTY == "Fayette" | COUNTY == "Boone" | COUNTY == "Jasper" | COUNTY == "Cedar" | COUNTY == "St. Clair" | 
+                    COUNTY == "Geary" | COUNTY == "Linn" | COUNTY == "Clinton" | COUNTY == "Polk" | COUNTY == "Marshall" | 
+                    COUNTY == "Tama" | COUNTY == "Whiteside" | COUNTY == "Benton" | COUNTY == "Dallas" | COUNTY == "Hardin" | 
+                    COUNTY == "Story" | COUNTY == "Macomb" | COUNTY == "Scott" | COUNTY == "Iowa" | COUNTY == "Poweshiek" | 
+                    COUNTY == "Jones" | COUNTY == "Cook" | COUNTY == "Greene" | COUNTY == "Warren" | COUNTY == "Johnson" | 
+                    COUNTY == "Monroe" | COUNTY == "Marion" | COUNTY == "Cass" | COUNTY == "Coles"))
+sviwind <- data.frame(sviwind$COUNTY, sviwind$ST_ABBR, sviwind$RPL_THEMES)
+sviwind$ctyst <- paste(sviwind$sviwind.COUNTY, sviwind$sviwind.ST_ABBR, sep = ", ")
+ggplot(sviwind, aes(x = ctyst, y = sviwind.RPL_THEMES, fill = ctyst)) + 
+  geom_boxplot() + 
+  theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
+  ggtitle("Easter/April 2020 Tornadoes") + 
+  xlab("") + 
+  labs(y = "svi")
+
+# CC Midwest Derecho, Aug 2020
 wind <- subset(ccd, incident_type == "wind" & name == "Midwest Derecho, Aug 2020")
 ggplot(wind, aes(x = created_at, y = svi)) + 
   geom_point() + 
