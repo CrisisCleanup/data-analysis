@@ -69,8 +69,7 @@ sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep
 ggplot(sviflood, aes(x = ctyst, y = sviflood.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
   theme(legend.position = "none", axis.text = element_text(angle = 90)) + 
-  xlab("") + 
-  labs(y = "svi")
+  labs(x = "", y = "svi")
 
 # CC Michigan Floods, May 2020
 flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020" & state == "Michigan")
@@ -101,8 +100,7 @@ ggplot(svihurricane, aes(x = ctyst, y = svihurricane.RPL_THEMES, fill = ctyst)) 
   geom_boxplot() + 
   theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
   ggtitle("Hurricane Zeta 2020") + 
-  xlab("") + 
-  labs(y = "svi")
+  labs( x = "", y = "svi")
 
 # CC Hurricane Zeta
 hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")
@@ -137,10 +135,9 @@ svitornado <- data.frame(svitornado$COUNTY, svitornado$ST_ABBR, svitornado$RPL_T
 svitornado$ctyst <- paste(svitornado$svitornado.COUNTY, svitornado$svitornado.ST_ABBR, sep = ", ")
 ggplot(svitornado, aes(x = ctyst, y = svitornado.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
-  theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
+  theme(legend.position = "none", axis.text.x = element_blank(), plot.title = element_text(hjust = 0.5)) + 
   ggtitle("Easter/April 2020 Tornadoes") + 
-  xlab("") + 
-  labs(y = "svi")
+  labs(x = "Crisis affecting the following states: AL, AR, CT, FL, GA, KT, LA, MA, ME, MI, NC, OH, OK, PA, SC, TN, TX, VA", y = "svi")
 
 # CC Easter/April 2020 Tornadoes
 tornado <- subset(ccd, incident_type == "tornado" & name == "Easter/April 2020 Tornadoes")
@@ -165,8 +162,7 @@ ggplot(sviwind, aes(x = ctyst, y = sviwind.RPL_THEMES, fill = ctyst)) +
   geom_boxplot() + 
   theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
   ggtitle("Easter/April 2020 Tornadoes") + 
-  xlab("") + 
-  labs(y = "svi")
+  labs(x = "", y = "svi")
 
 # CC Midwest Derecho, Aug 2020
 wind <- subset(ccd, incident_type == "wind" & name == "Midwest Derecho, Aug 2020")
