@@ -50,7 +50,7 @@ svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
 # SVI US
 svius <- subset(svi, RPL_THEMES != "-999")
 svius <- data.frame(svius$ST_ABBR, svius$RPL_THEMES)
-ggplot(svius, aes(x = svius.ST_ABBR, y = svius.RPL_THEMES, fill = svius.ST_ABBR)) + 
+ggplot(svius, aes(x = reorder(svius.ST_ABBR, svius.RPL_THEMES), y = svius.RPL_THEMES, fill = svius.ST_ABBR))  + 
   geom_boxplot() + 
   theme(legend.position = "none") + 
   labs(x = "state", y = "svi")
@@ -66,10 +66,11 @@ sviflood <- subset(svi, STATE == "MICHIGAN" & RPL_THEMES != "-999" &
                       COUNTY == "Kent" | COUNTY == "St. Clair" | COUNTY == "Livingston"))
 sviflood <- data.frame(sviflood$COUNTY, sviflood$ST_ABBR, sviflood$RPL_THEMES)
 sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep = ", ")
-ggplot(sviflood, aes(x = ctyst, y = sviflood.RPL_THEMES, fill = ctyst)) + 
+ggplot(sviflood, aes(x = reorder(ctyst, sviflood.RPL_THEMES), y = sviflood.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
-  theme(legend.position = "none", axis.text = element_text(angle = 90)) + 
-  labs(x = "", y = "svi")
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none", axis.text = element_text(angle = 90)) + 
+  ggtitle("Michigan Floods 2020") + 
+  labs(x = "county", y = "svi")
 
 # CC Michigan Floods, May 2020
 flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020" & state == "Michigan")
@@ -96,11 +97,11 @@ svihurricane <- subset(svi, RPL_THEMES != "-999" & (STATE == "LOUISIANA" | STATE
                             COUNTY == "Bibb" | COUNTY == "Chilton" | COUNTY == "Perry" | COUNTY == "Montgomery"))
 svihurricane <- data.frame(svihurricane$COUNTY, svihurricane$ST_ABBR, svihurricane$RPL_THEMES)
 svihurricane$ctyst <- paste(svihurricane$svihurricane.COUNTY, svihurricane$svihurricane.ST_ABBR, sep = ", ")
-ggplot(svihurricane, aes(x = ctyst, y = svihurricane.RPL_THEMES, fill = ctyst)) + 
+ggplot(svihurricane, aes(x = reorder(ctyst, svihurricane.RPL_THEMES), y = svihurricane.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
-  theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none", axis.text = element_text(angle = 90)) + 
   ggtitle("Hurricane Zeta 2020") + 
-  labs( x = "", y = "svi")
+  labs( x = "county", y = "svi")
 
 # CC Hurricane Zeta
 hurricane <- subset(ccd, incident_type == "hurricane" & name == "Hurricane Zeta")
@@ -133,9 +134,9 @@ svitornado <- subset(svi, RPL_THEMES != "-999" & (STATE == "SOUTH CAROLINA" | ST
                           COUNTY == "Crittenden" | COUNTY == "Ohio" | COUNTY == "Calcasieu" | COUNTY == "Orange" | COUNTY == "Vernon"))
 svitornado <- data.frame(svitornado$COUNTY, svitornado$ST_ABBR, svitornado$RPL_THEMES)
 svitornado$ctyst <- paste(svitornado$svitornado.COUNTY, svitornado$svitornado.ST_ABBR, sep = ", ")
-ggplot(svitornado, aes(x = ctyst, y = svitornado.RPL_THEMES, fill = ctyst)) + 
+ggplot(svitornado, aes(x = reorder(ctyst, svitornado.RPL_THEMES), y = svitornado.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
-  theme(legend.position = "none", axis.text.x = element_blank(), plot.title = element_text(hjust = 0.5)) + 
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none", axis.text.x = element_blank()) + 
   ggtitle("Easter/April 2020 Tornadoes") + 
   labs(x = "Crisis affecting the following states: AL, AR, CT, FL, GA, KT, LA, MA, ME, MI, NC, OH, OK, PA, SC, TN, TX, VA", y = "svi")
 
@@ -158,11 +159,11 @@ sviwind <- subset(svi, RPL_THEMES != "-999" & (STATE == "INDIANA" | STATE == "MI
                     COUNTY == "Monroe" | COUNTY == "Marion" | COUNTY == "Cass" | COUNTY == "Coles"))
 sviwind <- data.frame(sviwind$COUNTY, sviwind$ST_ABBR, sviwind$RPL_THEMES)
 sviwind$ctyst <- paste(sviwind$sviwind.COUNTY, sviwind$sviwind.ST_ABBR, sep = ", ")
-ggplot(sviwind, aes(x = ctyst, y = sviwind.RPL_THEMES, fill = ctyst)) + 
+ggplot(sviwind, aes(x = reorder(ctyst, sviwind.RPL_THEMES), y = sviwind.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
-  theme(legend.position = "none", axis.text = element_text(angle = 90), plot.title = element_text(hjust = 0.5)) + 
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none", axis.text = element_text(angle = 90)) + 
   ggtitle("Easter/April 2020 Tornadoes") + 
-  labs(x = "", y = "svi")
+  labs(x = "county", y = "svi")
 
 # CC Midwest Derecho, Aug 2020
 wind <- subset(ccd, incident_type == "wind" & name == "Midwest Derecho, Aug 2020")
