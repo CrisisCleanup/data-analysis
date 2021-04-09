@@ -47,6 +47,8 @@ pt$renderPivot()
 # SVI data
 svi <- read.csv(file = "/users/danny/documents/capstone/SVI2018_US.csv")
 
+unique(svi$E_TOTPOP)
+
 # SVI US
 svius <- subset(svi, RPL_THEMES != "-999")
 svius <- data.frame(svius$ST_ABBR, svius$RPL_THEMES)
@@ -64,6 +66,10 @@ sviflood <- subset(svi, STATE == "MICHIGAN" & RPL_THEMES != "-999" &
                       COUNTY == "Gladwin" | COUNTY == "Charlevoix" | COUNTY == "Berrien" | 
                       COUNTY == "Washtenaw" | COUNTY == "Macomb" | COUNTY == "Clinton" | 
                       COUNTY == "Kent" | COUNTY == "St. Clair" | COUNTY == "Livingston"))
+
+svifloodpop <- sum(sviflood$E_TOTPOP)
+unique(sviflood$LOCATION)
+
 sviflood <- data.frame(sviflood$COUNTY, sviflood$ST_ABBR, sviflood$RPL_THEMES)
 sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep = ", ")
 ggplot(sviflood, aes(x = reorder(ctyst, sviflood.RPL_THEMES), y = sviflood.RPL_THEMES, fill = ctyst)) + 
@@ -73,8 +79,11 @@ ggplot(sviflood, aes(x = reorder(ctyst, sviflood.RPL_THEMES), y = sviflood.RPL_T
   labs(x = "county", y = "svi")
 
 # CC Michigan Floods, May 2020
-flood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020" & state == "Michigan")
-ggplot(flood, aes(x = created_at, y = svi)) + 
+ccdflood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020" & state == "Michigan")
+ccdfloodpop <- nrow(ccdflood)
+View(ccdflood)
+ccdfloodpop / svifloodpop
+ggplot(ccdflood, aes(x = created_at, y = svi)) + 
   geom_point() + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   ggtitle("Michigan Floods 2020") + 
