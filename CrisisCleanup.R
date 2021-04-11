@@ -15,9 +15,22 @@ ccd$created_at <- as.Date(ccd$created_at)
 # CC incident type
 it <- data.frame(ccd$incident_type, ccd$name)
 it <- unique(it)
+# Incident type = flood
+it_flood <- subset(it, ccd.incident_type == "flood")
+nrow(it_flood)
+# Incident type = hurricane
+it_hurricane <- subset(it, ccd.incident_type == "hurricane")
+nrow(it_hurricane)
+# Incident type = tornado
+it_tornado <- subset(it, ccd.incident_type == "tornado")
+nrow(it_tornado)
+# Incident type = wind
+it_wind <- subset(it, ccd.incident_type == "wind")
+nrow(it_wind)
 it <- data.frame(it$ccd.incident_type)
 it <- data.frame(table(unlist(it)))
 it <- subset(it, it$Freq > 1)
+  # Chart
 ggplot(it, aes(x = reorder(Var1, -Freq), y = Freq, fill = Var1)) +
   geom_bar(stat = "identity") + 
   theme(legend.position = "none") + 
@@ -28,6 +41,22 @@ wt <- data.frame(ccd$work_type_key)
 wt <- data.frame(table(unlist(wt)))
 wt <- subset(wt, wt$Freq >= 20000)
 wt <- wt[order(-wt$Freq), ]
+  # Work type key = tarp
+wt_tarp <- subset(ccd, work_type_key == "tarp")
+nrow(wt_tarp)
+  # Work type key = muck_out
+wt_muck_out <- subset(ccd, work_type_key == "muck_out")
+nrow(wt_muck_out)
+  # Work type key = trees
+wt_trees <- subset(ccd, work_type_key == "trees")
+nrow(wt_trees)
+  # Work type key = debris
+wt_debris <- subset(ccd, work_type_key == "debris")
+nrow(wt_debris)
+  # Work type key = mold_remediation
+wt_mold_remediation <- subset(ccd, work_type_key == "mold_remediation")
+nrow(wt_mold_remediation)
+  # Chart
 ggplot(wt, aes(x = reorder(Var1, -Freq), y = Freq, fill = Var1)) + 
   geom_bar(stat = "identity") + 
   theme(legend.position = "none") + 
@@ -89,6 +118,7 @@ worksites <- nrow(ccdflood)
 ccdfloodlocu <- data.frame(unique(ccdfloodloct$ccdflood.location))
 residences <- nrow(ccdfloodlocu)
   # Crisis Cleanup total impact (residences / approved FEMA applications)
+worksites / residences
 residences / 2754
   # Chart
 ggplot(ccdflood, aes(x = created_at, y = svi)) + 
