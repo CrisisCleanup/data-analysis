@@ -98,7 +98,7 @@ sviflood <- subset(svi, STATE == "MICHIGAN" & RPL_THEMES != "-999" &
 svifloodlocation <- data.frame(sviflood$LOCATION, sviflood$RPL_THEMES)
   # Average SVI
 mean(svifloodlocation$sviflood.RPL_THEMES)
-  # Number of SVI locations
+  # Number of SVI
 nrow(svifloodlocation)
 sviflood <- data.frame(sviflood$COUNTY, sviflood$ST_ABBR, sviflood$RPL_THEMES)
 sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep = ", ")
@@ -111,6 +111,8 @@ ggplot(sviflood, aes(x = reorder(ctyst, sviflood.RPL_THEMES), y = sviflood.RPL_T
 
 # CC Michigan Floods, May 2020
 ccdflood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020" & state == "Michigan")
+  # Average SVI
+mean(ccdflood$svi)
   # Number of worksites
 ccdfloodloct <- data.frame(ccdflood$location)
 worksites <- nrow(ccdflood)
