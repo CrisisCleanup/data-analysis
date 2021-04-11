@@ -67,10 +67,13 @@ sviflood <- subset(svi, STATE == "MICHIGAN" & RPL_THEMES != "-999" &
                       COUNTY == "Washtenaw" | COUNTY == "Macomb" | COUNTY == "Clinton" | 
                       COUNTY == "Kent" | COUNTY == "St. Clair" | COUNTY == "Livingston"))
 svifloodlocation <- data.frame(sviflood$LOCATION, sviflood$RPL_THEMES)
+  # Average SVI
 mean(svifloodlocation$sviflood.RPL_THEMES)
+  # Number of SVI locations
 nrow(svifloodlocation)
 sviflood <- data.frame(sviflood$COUNTY, sviflood$ST_ABBR, sviflood$RPL_THEMES)
 sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep = ", ")
+  # Chart
 ggplot(sviflood, aes(x = reorder(ctyst, sviflood.RPL_THEMES), y = sviflood.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
   theme(plot.title = element_text(hjust = 0.5), legend.position = "none", axis.text = element_text(angle = 90)) + 
@@ -79,12 +82,15 @@ ggplot(sviflood, aes(x = reorder(ctyst, sviflood.RPL_THEMES), y = sviflood.RPL_T
 
 # CC Michigan Floods, May 2020
 ccdflood <- subset(ccd, incident_type == "flood" & name == "Michigan Floods, May 2020" & state == "Michigan")
+  # Number of worksites
 ccdfloodloct <- data.frame(ccdflood$location)
 worksites <- nrow(ccdflood)
+  # Number of residences
 ccdfloodlocu <- data.frame(unique(ccdfloodloct$ccdflood.location))
 residences <- nrow(ccdfloodlocu)
-View(ccdflood)
-ccdfloodpop / svifloodpop
+  # Crisis Cleanup total impact (residences / approved FEMA applications)
+residences / 2754
+  # Chart
 ggplot(ccdflood, aes(x = created_at, y = svi)) + 
   geom_point() + 
 #  theme(plot.title = element_text(hjust = 0.5)) + 
