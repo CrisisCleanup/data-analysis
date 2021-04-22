@@ -106,7 +106,7 @@ sviflood$ctyst <- paste(sviflood$sviflood.COUNTY, sviflood$sviflood.ST_ABBR, sep
 ggplot(sviflood, aes(x = reorder(ctyst, sviflood.RPL_THEMES), y = sviflood.RPL_THEMES, fill = ctyst)) + 
   geom_boxplot() + 
   theme(plot.title = element_text(hjust = 0.5), legend.position = "none", axis.text = element_text(angle = 90)) + 
-#  ggtitle("Michigan Floods 2020") + 
+  ggtitle("Michigan Floods 2020") + 
   labs(x = "county", y = "svi")
 
 # CC Michigan Floods, May 2020
